@@ -2,9 +2,9 @@
 
 Clients can subscribe to bank term deposits depending upon their needs, and period of time. Once that term ends, the client gets back benefits against the money withheld by the bank. Benefits may include interest amount, safer option of saving, creating deposits to use in future as per need, etc. Therefore, we want to predict if a certain client is going to subscribe for bank term deposit or not, using certain given details. Given, a set of features we want to predict the target variable as true, which is subscriber or false which is non- subscriber.
 
-# Dataset In use ( https://data.world/data-society/bank-marketing-data/workspace/file?filename=bank-additional-names.txt )
+# Dataset In use 
 
-The dataset that we have used is based on phone calls made by a Portuguese banking institution during a direct marketing campaign. Our dataset comprises 21 features in the form of columns (including our desired target column). 
+The dataset that we have used is based on phone calls made by a Portuguese banking institution during a direct marketing campaign. Our dataset comprises 21 features in the form of columns (including our desired target column). ( https://data.world/data-society/bank-marketing-data/workspace/file?filename=bank-additional-names.txt )
 
 Before data pre-processing : Total no of rows - 41,190 Total no of columns - 21
 
