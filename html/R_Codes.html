@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>42da3908c7c04510b72089a5c853c506</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="normalizing-the-pre-processed-data">Normalizing the pre-processed data</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-pre-processed-dataframe-onto-r-script">Loading the pre-processed dataframe onto R script</h1>
+<p>filename &lt;- file.choose()</p>
+<h1 id="reading-the-dataframe">Reading the dataframe</h1>
+<p>data &lt;- read.csv(filename)</p>
+<h1 id="viewing-the-dataframe-loaded">Viewing the dataframe loaded</h1>
+<p>View(data)</p>
+<h1 id="summarizing-the-dataframe">Summarizing the dataframe</h1>
+<p>summary(data)</p>
+<h1 id="checking-the-datatypes-of-all-variables-of-the-dataframe">Checking the datatypes of all variables of the dataframe</h1>
+<p>str(data)</p>
+<h1 id="converting-integer-datatype-columns-to-numeric-datatype-columns">Converting integer datatype columns to numeric datatype columns</h1>
+<p>data[1:2] = lapply(data[1:2], FUN = function(y){as.numeric(y)}) data[12:15] = lapply(data[12:15], FUN = function(y){as.numeric(y)})</p>
+<h1 id="creating-a-function-that-performs-min-max-normalization">Creating a function that performs min-max normalization</h1>
+<p>minmax_normalizing &lt;- function(x, na.rm = TRUE) { return ((x - min(x)) / (max(x) - min(x))) }</p>
+<h1 id="creating-a-function-that-performs-z-score-normalization">Creating a function that performs z-score normalization</h1>
+<p>z_normalizing &lt;- function(x, na.rm = TRUE) { return ((x - mean(x)) / sd(x)) }</p>
+<h1 id="normalizing-our-dataframe-using-the-min-max-normalization-function-described-above">Normalizing our dataframe using the min-max normalization function described above</h1>
+<p>minmax_normalized_data = as.data.frame(lapply(data[c(‘age’, ‘duration’, ‘campaign’, ‘pdays’, ‘previous’, ‘emp_var_rate’, ‘cons_price_idx’, ‘cons_conf_idx’, ‘euribor3m’, ‘nr_employed’)], minmax_normalizing))</p>
+<h1 id="creating-min-max-normalized-dataframe">Creating min-max normalized dataframe</h1>
+<p>minmax_normalized_data[“job”] = data<span class="math inline">$job minmax_normalized_data["marital"] = data$</span>marital minmax_normalized_data[“education”] = data<span class="math inline">$education minmax_normalized_data["default"] = data$</span>default minmax_normalized_data[“housing”] = data<span class="math inline">$housing minmax_normalized_data["loan"] = data$</span>loan minmax_normalized_data[“contact”] = data<span class="math inline">$contact minmax_normalized_data["month"] = data$</span>month minmax_normalized_data[“day_of_week”] = data<span class="math inline">$day_of_week minmax_normalized_data["cons.conf.idx"] = data$</span>cons.conf.idx minmax_normalized_data[“poutcome”] = data<span class="math inline">$poutcome minmax_normalized_data["y"] = data$</span>y</p>
+<h1 id="viewing-the-min-max-normalized-dataframe">Viewing the min-max normalized dataframe</h1>
+<p>View(minmax_normalized_data)</p>
+<h1 id="normalizing-our-dataframe-using-the-z-score-normalization-function-described-above">Normalizing our dataframe using the z-score normalization function described above</h1>
+<p>z_normalized_data = as.data.frame(lapply(data[c(‘age’, ‘duration’, ‘campaign’, ‘pdays’, ‘previous’, ‘emp_var_rate’, ‘cons_price_idx’, ‘cons_conf_idx’, ‘euribor3m’, ‘nr_employed’)], z_normalizing))</p>
+<h1 id="creating-z-score-normalized-dataframe">Creating z-score normalized dataframe</h1>
+<p>z_normalized_data[“job”] = data<span class="math inline">$job z_normalized_data["marital"] = data$</span>marital z_normalized_data[“education”] = data<span class="math inline">$education z_normalized_data["default"] = data$</span>default z_normalized_data[“housing”] = data<span class="math inline">$housing z_normalized_data["loan"] = data$</span>loan z_normalized_data[“contact”] = data<span class="math inline">$contact z_normalized_data["month"] = data$</span>month z_normalized_data[“day_of_week”] = data<span class="math inline">$day_of_week z_normalized_data["cons.conf.idx"] = data$</span>cons.conf.idx z_normalized_data[“poutcome”] = data<span class="math inline">$poutcome z_normalized_data["y"] = data$</span>y</p>
+<h1 id="viewing-the-z-score-normalized-dataframe">Viewing the z-score normalized dataframe</h1>
+<p>View(z_normalized_data)</p>
+<p>#Exporting the min-max normalized data as a csv file write.csv(minmax_normalized_data, “C:\Users\tanya\Desktop\1st_Sem\KDDM\Project\Datasets_Used\MinMax_Normalized_Data.csv”, row.names = FALSE)</p>
+<p>#Exporting the z-score normalized data as a csv file write.csv(z_normalized_data, “C:\Users\tanya\Desktop\1st_Sem\KDDM\Project\Datasets_Used\Z_Normalized_data.csv”, row.names = FALSE)</p>
+<h1 id="section">———————————————————————————————-</h1>
+<h1 id="decision-trees">Decision Trees</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment-1">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-rpart-and-rpart.plot-library">Loading the rpart and rpart.plot library</h1>
+<p>library(rpart) library(rpart.plot)</p>
+<h1 id="implementing-cart-on-min-max-normalized-dataframe">Implementing CART on min-max normalized dataframe</h1>
+<h1 id="loading-the-pre-processed-min-max-normalized-dataframe-onto-r-script">Loading the pre-processed min-max normalized dataframe onto R script</h1>
+<p>filename &lt;- file.choose()</p>
+<h1 id="reading-the-dataset-with-y-column-as-factor">Reading the dataset with ‘y’ column as ‘factor’</h1>
+<p>minmax_normalized_data &lt;- read.csv(filename, colClasses = c(“y” = “factor”))</p>
+<h1 id="summarizing-the-dataframe-1">Summarizing the dataframe</h1>
+<p>summary(minmax_normalized_data)</p>
+<h1 id="checking-the-datatypes-of-variables-of-dataframe">Checking the datatypes of variables of dataframe</h1>
+<p>str(minmax_normalized_data)</p>
+<h1 id="initializing-the-plotting-window">Initializing the plotting window</h1>
+<p>dev.off</p>
+<h1 id="viewing-the-dataframe-loaded-1">Viewing the dataframe loaded</h1>
+<p>View(minmax_normalized_data)</p>
+<h1 id="setting-the-seed-value-at-555">Setting the seed value at ‘555’</h1>
+<p>set.seed(555)</p>
+<h1 id="generating-a-list-of-70-random-indexes-of-the-dataframe">Generating a list of 70% random indexes of the dataframe</h1>
+<p>index &lt;- sort(sample(nrow(minmax_normalized_data), round(.70*nrow(minmax_normalized_data))))</p>
+<h1 id="creating-a-training-dataframe-with-70-data-from-dataframe-using-the-above-generated-indexes-list">Creating a training dataframe with 70% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>training &lt;- minmax_normalized_data[index,]</p>
+<h1 id="creating-a-test-dataframe-with-30-data-from-dataframe-using-the-above-generated-indexes-list">Creating a test dataframe with 30% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>test &lt;- minmax_normalized_data[-index,]</p>
+<h1 id="training-our-model-on-our-training-dataframe">Training our model on our training dataframe</h1>
+<p>CART_y &lt;- rpart(y~., data = training)</p>
+<h1 id="plotting-our-model-that-has-been-trained">Plotting our model that has been trained</h1>
+<p>rpart.plot(CART_y)</p>
+<h1 id="closing-the-plotting-window">Closing the plotting window</h1>
+<p>dev.off()</p>
+<h1 id="predict-results-on-our-test-dataframe">Predict results on our test dataframe</h1>
+<p>CART_predict &lt;- predict(CART_y, test, type=“class”)</p>
+<h1 id="creating-a-confusion-matrix-of-our-results-and-storing-them-in-variable-named-result">Creating a confusion matrix of our results and storing them in variable named ‘result’</h1>
+<p>result &lt;- table(Actual=test[,21], CART = CART_predict)</p>
+<h1 id="printing-the-confusion-matrix">Printing the confusion matrix</h1>
+<p>print(“Confusion matrix of our result is:”) print(result)</p>
+<h1 id="calculating-the-incorrect-values-that-is-values-that-are-predicted-wrong">Calculating the incorrect values, that is, values that are predicted wrong</h1>
+<p>incorrect &lt;- (test[,21] != CART_predict)</p>
+<h1 id="calculating-the-error-rate-of-our-model">Calculating the ‘error rate’ of our model</h1>
+<p>errror_rate &lt;- sum(incorrect)/length(incorrect) # Printing the error rate of our model print(paste(“Error rate of our model (with min-max normalization) is:”, errror_rate))</p>
+<h1 id="calculating-the-accuracy-of-our-model">Calculating the ‘accuracy’ of our model</h1>
+<p>accuracy &lt;- (1 - errror_rate) * 100 # Printing the accuracy of our model print(paste(“Accuracy of our model (with min-max normalization) is:”, accuracy))</p>
+<h1 id="calculating-the-precision-score-of-our-model">Calculating the ‘precision score’ of our model</h1>
+<p>precision_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[1,2]) == 0, yes = 1, no = sum(result[2,2], result[1,2])) # Printing the precision score of our model print(paste(“Precision score of our model (with min-max normalization) is:”, precision_score))</p>
+<h1 id="calculating-the-recall-score-of-our-model">Calculating the ‘recall score’ of our model</h1>
+<p>recall_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[2,1]) == 0, yes = 1, no = sum(result[2,2], result[2,1])) # Printing the recall score of our model print(paste(“Recall score of our model (with min-max normalization) is:”, recall_score))</p>
+<h1 id="calculating-the-f1-measure-of-our-model">Calculating the ‘F1-measure’ of our model</h1>
+<p>f1_measure &lt;- 2 * precision_score * recall_score / ifelse(test = precision_score + recall_score == 0, yes = 1, no = precision_score + recall_score) # Printing the F1-measure of our model print(paste(“F1-measure of our model (with min-max normalization) is:”, f1_measure))</p>
+<h1 id="section-1">————————————————————————–</h1>
+<h1 id="implementing-cart-on-z-score-normalized-dataframe">Implementing CART on z-score normalized dataframe</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment-2">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-pre-processed-min-max-normalized-dataframe-onto-r-script-1">Loading the pre-processed min-max normalized dataframe onto R script</h1>
+<p>filename &lt;- file.choose()</p>
+<h1 id="reading-the-dataset-with-y-column-as-factor-1">Reading the dataset with ‘y’ column as ‘factor’</h1>
+<p>zscore_normalized_data &lt;- read.csv(filename, colClasses = c(“y” = “factor”))</p>
+<h1 id="summarizing-the-dataframe-2">Summarizing the dataframe</h1>
+<p>summary(zscore_normalized_data)</p>
+<h1 id="checking-the-datatypes-of-variables-of-dataframe-1">Checking the datatypes of variables of dataframe</h1>
+<p>str(zscore_normalized_data)</p>
+<h1 id="initializing-the-plotting-window-1">Initializing the plotting window</h1>
+<p>dev.off</p>
+<h1 id="viewing-the-dataframe-loaded-2">Viewing the dataframe loaded</h1>
+<p>View(zscore_normalized_data)</p>
+<h1 id="setting-the-seed-value-at-555-1">Setting the seed value at ‘555’</h1>
+<p>set.seed(555)</p>
+<h1 id="generating-a-list-of-70-random-indexes-of-the-dataframe-1">Generating a list of 70% random indexes of the dataframe</h1>
+<p>index &lt;- sort(sample(nrow(zscore_normalized_data), round(.70*nrow(zscore_normalized_data))))</p>
+<h1 id="creating-a-training-dataframe-with-70-data-from-dataframe-using-the-above-generated-indexes-list-1">Creating a training dataframe with 70% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>training &lt;- zscore_normalized_data[index,]</p>
+<h1 id="creating-a-test-dataframe-with-30-data-from-dataframe-using-the-above-generated-indexes-list-1">Creating a test dataframe with 30% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>test &lt;- zscore_normalized_data[-index,]</p>
+<h1 id="training-our-model-on-our-training-dataframe-1">Training our model on our training dataframe</h1>
+<p>CART_y &lt;- rpart(y~., data = training)</p>
+<h1 id="plotting-our-model-that-has-been-trained-1">Plotting our model that has been trained</h1>
+<p>rpart.plot(CART_y)</p>
+<h1 id="closing-the-plotting-window-1">Closing the plotting window</h1>
+<p>dev.off()</p>
+<h1 id="predict-results-on-our-test-dataframe-1">Predict results on our test dataframe</h1>
+<p>CART_predict &lt;- predict(CART_y, test, type=“class”)</p>
+<h1 id="creating-a-confusion-matrix-of-our-results-and-storing-them-in-variable-named-result-1">Creating a confusion matrix of our results and storing them in variable named ‘result’</h1>
+<p>result &lt;- table(Actual=test[,21], CART = CART_predict)</p>
+<h1 id="printing-the-confusion-matrix-1">Printing the confusion matrix</h1>
+<p>print(“Confusion matrix of our result is:”) print(result)</p>
+<h1 id="calculating-the-incorrect-values-that-is-values-that-are-predicted-wrong-1">Calculating the incorrect values, that is, values that are predicted wrong</h1>
+<p>incorrect &lt;- (test[,21] != CART_predict)</p>
+<h1 id="calculating-the-error-rate-of-our-model-1">Calculating the ‘error rate’ of our model</h1>
+<p>errror_rate &lt;- sum(incorrect)/length(incorrect) # Printing the error rate of our model print(paste(“Error rate of our model (with z-score normalization) is:”, errror_rate))</p>
+<h1 id="calculating-the-accuracy-of-our-model-1">Calculating the ‘accuracy’ of our model</h1>
+<p>accuracy &lt;- (1 - errror_rate) * 100 # Printing the accuracy of our model print(paste(“Accuracy of our model (with z-score normalization) is:”, accuracy))</p>
+<h1 id="calculating-the-precision-score-of-our-model-1">Calculating the ‘precision score’ of our model</h1>
+<p>precision_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[1,2]) == 0, yes = 1, no = sum(result[2,2], result[1,2])) # Printing the precision score of our model print(paste(“Precision score of our model (with z-score normalization) is:”, precision_score))</p>
+<h1 id="calculating-the-recall-score-of-our-model-1">Calculating the ‘recall score’ of our model</h1>
+<p>recall_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[2,1]) == 0, yes = 1, no = sum(result[2,2], result[2,1])) # Printing the recall score of our model print(paste(“Recall score of our model (with z-score normalization) is:”, recall_score))</p>
+<h1 id="calculating-the-f1-measure-of-our-model-1">Calculating the ‘F1-measure’ of our model</h1>
+<p>f1_measure &lt;- 2 * precision_score * recall_score / ifelse(test = precision_score + recall_score == 0, yes = 1, no = precision_score + recall_score) # Printing the F1-measure of our model print(paste(“F1-measure of our model (with z-score normalization) is:”, f1_measure))</p>
+<h1 id="section-2">———————————————————————————————-</h1>
+<h1 id="random-forest">Random Forest</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment-3">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-random-forest-library">Loading the Random Forest library</h1>
+<p>library(randomForest)</p>
+<h1 id="implementing-random-forest-on-min-max-normalized-dataframe">Implementing Random Forest on min-max normalized dataframe</h1>
+<h1 id="loading-the-pre-processed-min-max-normalized-dataframe-onto-r-script-2">Loading the pre-processed min-max normalized dataframe onto R script</h1>
+<p>filename &lt;- file.choose()</p>
+<h1 id="reading-the-dataset-with-y-column-as-factor-2">Reading the dataset with ‘y’ column as ‘factor’</h1>
+<p>minmax_normalized_data &lt;- read.csv(filename, colClasses = c(“y” = “factor”))</p>
+<h1 id="summarizing-the-dataframe-3">Summarizing the dataframe</h1>
+<p>summary(minmax_normalized_data)</p>
+<h1 id="checking-the-datatypes-of-variables-of-dataframe-2">Checking the datatypes of variables of dataframe</h1>
+<p>str(minmax_normalized_data)</p>
+<h1 id="initializing-the-plotting-window-2">Initializing the plotting window</h1>
+<p>dev.off</p>
+<h1 id="viewing-the-dataframe-loaded-3">Viewing the dataframe loaded</h1>
+<p>View(minmax_normalized_data)</p>
+<h1 id="setting-the-seed-value-at-555-2">Setting the seed value at ‘555’</h1>
+<p>set.seed(555)</p>
+<h1 id="generating-a-list-of-70-random-indexes-of-the-dataframe-2">Generating a list of 70% random indexes of the dataframe</h1>
+<p>index &lt;- sort(sample(nrow(minmax_normalized_data), round(.70*nrow(minmax_normalized_data))))</p>
+<h1 id="creating-a-training-dataframe-with-70-data-from-dataframe-using-the-above-generated-indexes-list-2">Creating a training dataframe with 70% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>training &lt;- minmax_normalized_data[index,]</p>
+<h1 id="creating-a-test-dataframe-with-30-data-from-dataframe-using-the-above-generated-indexes-list-2">Creating a test dataframe with 30% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>test &lt;- minmax_normalized_data[-index,]</p>
+<h1 id="fitting-our-model-on-our-training-dataframe">Fitting our model on our training dataframe</h1>
+<p>fit &lt;- randomForest(factor(y)~., data = training, importance=TRUE, ntree=1000)</p>
+<h1 id="calculating-the-importance-of-each-feature-of-our-dataframe-meandecreaseaccuracy-and-meandecreasegini">Calculating the importance of each feature of our dataframe, MeanDecreaseAccuracy and MeanDecreaseGini</h1>
+<p>importance(fit)</p>
+<h1 id="plotting-the-importance-of-each-feature-of-our-dataframe-meandecreaseaccuracy-and-meandecreasegini">Plotting the importance of each feature of our dataframe, MeanDecreaseAccuracy and MeanDecreaseGini</h1>
+<p>varImpPlot(fit)</p>
+<h1 id="closing-the-plotting-window-2">Closing the plotting window</h1>
+<p>dev.off()</p>
+<h1 id="predicting-results-on-our-test-dataframe">Predicting results on our test dataframe</h1>
+<p>Prediction &lt;- predict(fit, test)</p>
+<h1 id="creating-a-confusion-matrix-of-our-results-and-storing-them-in-variable-named-result-2">Creating a confusion matrix of our results and storing them in variable named ‘result’</h1>
+<p>result &lt;- table(Actual=test[,21], Prediction)</p>
+<h1 id="printing-the-confusion-matrix-2">Printing the confusion matrix</h1>
+<p>print(“Confusion matrix of our result is:”) print(result)</p>
+<h1 id="calculating-the-incorrect-values-that-is-values-that-are-predicted-wrong-2">Calculating the incorrect values, that is, values that are predicted wrong</h1>
+<p>incorrect &lt;- (test[,21] != Prediction)</p>
+<h1 id="calculating-the-error-rate-of-our-model-2">Calculating the ‘error rate’ of our model</h1>
+<p>errror_rate &lt;- sum(incorrect)/length(incorrect) # Printing the error rate of our model print(paste(“Error rate of our model (with min-max normalization) is:”, errror_rate))</p>
+<h1 id="calculating-the-accuracy-of-our-model-2">Calculating the ‘accuracy’ of our model</h1>
+<p>accuracy &lt;- (1 - errror_rate) * 100 # Printing the accuracy of our model print(paste(“Accuracy of our model (with min-max normalization) is:”, accuracy))</p>
+<h1 id="calculating-the-precision-score-of-our-model-2">Calculating the ‘precision score’ of our model</h1>
+<p>precision_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[1,2]) == 0, yes = 1, no = sum(result[2,2], result[1,2])) # Printing the precision score of our model print(paste(“Precision score of our model (with min-max normalization) is:”, precision_score))</p>
+<h1 id="calculating-the-recall-score-of-our-model-2">Calculating the ‘recall score’ of our model</h1>
+<p>recall_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[2,1]) == 0, yes = 1, no = sum(result[2,2], result[2,1])) # Printing the recall score of our model print(paste(“Recall score of our model (with min-max normalization) is:”, recall_score))</p>
+<h1 id="calculating-the-f1-measure-of-our-model-2">Calculating the ‘F1-measure’ of our model</h1>
+<p>f1_measure &lt;- 2 * precision_score * recall_score / ifelse(test = precision_score + recall_score == 0, yes = 1, no = precision_score + recall_score) # Printing the F1-measure of our model print(paste(“F1-measure of our model (with min-max normalization) is:”, f1_measure))</p>
+<h1 id="section-3">————————————————————————–</h1>
+<h1 id="implementing-random-forest-on-z-score-normalized-dataframe">Implementing Random Forest on z-score normalized dataframe</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment-4">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-pre-processed-z-score-normalized-dataframe-onto-r-script">Loading the pre-processed z-score normalized dataframe onto R script</h1>
+<p>filename &lt;- file.choose()</p>
+<h1 id="reading-the-dataset-with-y-column-as-factor-3">Reading the dataset with ‘y’ column as ‘factor’</h1>
+<p>zscore_normalized_data &lt;- read.csv(filename, colClasses = c(“y” = “factor”))</p>
+<h1 id="summarizing-the-dataframe-4">Summarizing the dataframe</h1>
+<p>summary(zscore_normalized_data)</p>
+<h1 id="checking-the-datatypes-of-variables-of-dataframe-3">Checking the datatypes of variables of dataframe</h1>
+<p>str(zscore_normalized_data)</p>
+<h1 id="initializing-the-plotting-window-3">Initializing the plotting window</h1>
+<p>dev.off</p>
+<h1 id="viewing-the-dataframe-loaded-4">Viewing the dataframe loaded</h1>
+<p>View(zscore_normalized_data)</p>
+<h1 id="setting-the-seed-value-at-555-3">Setting the seed value at ‘555’</h1>
+<p>set.seed(555)</p>
+<h1 id="generating-a-list-of-70-random-indexes-of-the-dataframe-3">Generating a list of 70% random indexes of the dataframe</h1>
+<p>index &lt;- sort(sample(nrow(zscore_normalized_data), round(.70*nrow(zscore_normalized_data))))</p>
+<h1 id="creating-a-training-dataframe-with-70-data-from-dataframe-using-the-above-generated-indexes-list-3">Creating a training dataframe with 70% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>training &lt;- zscore_normalized_data[index,]</p>
+<h1 id="creating-a-test-dataframe-with-30-data-from-dataframe-using-the-above-generated-indexes-list-3">Creating a test dataframe with 30% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>test &lt;- zscore_normalized_data[-index,]</p>
+<h1 id="fitting-our-model-on-our-training-dataframe-1">Fitting our model on our training dataframe</h1>
+<p>fit &lt;- randomForest(factor(y)~., data = training, importance=TRUE, ntree=1000)</p>
+<h1 id="calculating-the-importance-of-each-feature-of-our-dataframe-meandecreaseaccuracy-and-meandecreasegini-1">Calculating the importance of each feature of our dataframe, MeanDecreaseAccuracy and MeanDecreaseGini</h1>
+<p>importance(fit)</p>
+<h1 id="plotting-the-importance-of-each-feature-of-our-dataframe-meandecreaseaccuracy-and-meandecreasegini-1">Plotting the importance of each feature of our dataframe, MeanDecreaseAccuracy and MeanDecreaseGini</h1>
+<p>varImpPlot(fit)</p>
+<h1 id="closing-the-plotting-window-3">Closing the plotting window</h1>
+<p>dev.off()</p>
+<h1 id="predicting-results-on-our-test-dataframe-1">Predicting results on our test dataframe</h1>
+<p>Prediction &lt;- predict(fit, test)</p>
+<h1 id="creating-a-confusion-matrix-of-our-results-and-storing-them-in-variable-named-result-3">Creating a confusion matrix of our results and storing them in variable named ‘result’</h1>
+<p>result &lt;- table(Actual=test[,21], Prediction)</p>
+<h1 id="printing-the-confusion-matrix-3">Printing the confusion matrix</h1>
+<p>print(“Confusion matrix of our result is:”) print(result)</p>
+<h1 id="calculating-the-incorrect-values-that-is-values-that-are-predicted-wrong-3">Calculating the incorrect values, that is, values that are predicted wrong</h1>
+<p>incorrect &lt;- (test[,21] != Prediction)</p>
+<h1 id="calculating-the-error-rate-of-our-model-3">Calculating the ‘error rate’ of our model</h1>
+<p>errror_rate &lt;- sum(incorrect)/length(incorrect) # Printing the error rate of our model print(paste(“Error rate of our model (with z-score normalization) is:”, errror_rate))</p>
+<h1 id="calculating-the-accuracy-of-our-model-3">Calculating the ‘accuracy’ of our model</h1>
+<p>accuracy &lt;- (1 - errror_rate) * 100 # Printing the accuracy of our model print(paste(“Accuracy of our model (with z-score normalization) is:”, accuracy))</p>
+<h1 id="calculating-the-precision-score-of-our-model-3">Calculating the ‘precision score’ of our model</h1>
+<p>precision_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[1,2]) == 0, yes = 1, no = sum(result[2,2], result[1,2])) # Printing the precision score of our model print(paste(“Precision score of our model (with z-score normalization) is:”, precision_score))</p>
+<h1 id="calculating-the-recall-score-of-our-model-3">Calculating the ‘recall score’ of our model</h1>
+<p>recall_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[2,1]) == 0, yes = 1, no = sum(result[2,2], result[2,1])) # Printing the recall score of our model print(paste(“Recall score of our model (with z-score normalization) is:”, recall_score))</p>
+<h1 id="calculating-the-f1-measure-of-our-model-3">Calculating the ‘F1-measure’ of our model</h1>
+<p>f1_measure &lt;- 2 * precision_score * recall_score / ifelse(test = precision_score + recall_score == 0, yes = 1, no = precision_score + recall_score) # Printing the F1-measure of our model print(paste(“F1-measure of our model (with z-score normalization) is:”, f1_measure))</p>
+<h1 id="section-4">———————————————————————————————-</h1>
+<h1 id="naive-bayes">Naive Bayes</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment-5">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-library">Loading the library</h1>
+<p>library(e1071) library(class)</p>
+<h1 id="implementing-naive-bayes-on-min-max-normalized-dataframe">Implementing Naive bayes on min-max normalized dataframe</h1>
+<h1 id="loading-the-pre-processed-min-max-normalized-dataframe-onto-r-script-3">Loading the pre-processed min-max normalized dataframe onto R script</h1>
+<p>filename &lt;- file.choose()</p>
+<h1 id="reading-the-dataset-with-y-column-as-factor-4">Reading the dataset with ‘y’ column as ‘factor’</h1>
+<p>minmax_normalized_data&lt;- read.csv(filename, colClasses = c(“y” = “factor”))</p>
+<h1 id="summarizing-the-dataframe-5">Summarizing the dataframe</h1>
+<p>summary(minmax_normalized_data)</p>
+<h1 id="checking-the-datatypes-of-variables-of-dataframe-4">Checking the datatypes of variables of dataframe</h1>
+<p>str(minmax_normalized_data)</p>
+<h1 id="viewing-the-dataframe-loaded-5">Viewing the dataframe loaded</h1>
+<p>View(minmax_normalized_data)</p>
+<h1 id="setting-the-seed-value-at-555-4">Setting the seed value at ‘555’</h1>
+<p>set.seed(555)</p>
+<h1 id="generating-a-list-of-70-random-indexes-of-the-dataframe-4">Generating a list of 70% random indexes of the dataframe</h1>
+<p>index &lt;- sort(sample(nrow(minmax_normalized_data), round(.70*nrow(minmax_normalized_data))))</p>
+<h1 id="creating-a-training-dataframe-with-70-data-from-dataframe-using-the-above-generated-indexes-list-4">Creating a training dataframe with 70% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>training &lt;- minmax_normalized_data[index,]</p>
+<h1 id="creating-a-test-dataframe-with-30-data-from-dataframe-using-the-above-generated-indexes-list-4">Creating a test dataframe with 30% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>test &lt;- minmax_normalized_data[-index,]</p>
+<p>#Implementing NaiveBayes technique fit &lt;- naiveBayes(factor(y)~., data = training, na.action=na.pass)</p>
+<h1 id="predicting-results-on-our-test-dataframe-2">Predicting results on our test dataframe</h1>
+<p>Prediction &lt;- predict(fit, test)</p>
+<h1 id="creating-a-confusion-matrix-of-our-results-and-storing-them-in-variable-named-result-4">Creating a confusion matrix of our results and storing them in variable named ‘result’</h1>
+<p>result &lt;- table(Actual=test[,21], Prediction)</p>
+<h1 id="printing-the-confusion-matrix-4">Printing the confusion matrix</h1>
+<p>print(“Confusion matrix of our result is:”) print(result)</p>
+<h1 id="calculating-the-incorrect-values-that-is-values-that-are-predicted-wrong-4">Calculating the incorrect values, that is, values that are predicted wrong</h1>
+<p>incorrect &lt;- (test[,21] != Prediction)</p>
+<h1 id="calculating-the-error-rate-of-our-model-4">Calculating the ‘error rate’ of our model</h1>
+<p>errror_rate &lt;- sum(incorrect)/length(incorrect) # Printing the error rate of our model print(paste(“Error rate of our model (with min-max normalization) is:”, errror_rate))</p>
+<h1 id="calculating-the-accuracy-of-our-model-4">Calculating the ‘accuracy’ of our model</h1>
+<p>accuracy &lt;- (1 - errror_rate) * 100 # Printing the accuracy of our model print(paste(“Accuracy of our model (with min-max normalization) is:”, accuracy))</p>
+<h1 id="calculating-the-precision-score-of-our-model-4">Calculating the ‘precision score’ of our model</h1>
+<p>precision_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[1,2]) == 0, yes = 1, no = sum(result[2,2], result[1,2])) # Printing the precision score of our model print(paste(“Precision score of our model (with min-max normalization) is:”, precision_score))</p>
+<h1 id="calculating-the-recall-score-of-our-model-4">Calculating the ‘recall score’ of our model</h1>
+<p>recall_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[2,1]) == 0, yes = 1, no = sum(result[2,2], result[2,1])) # Printing the recall score of our model print(paste(“Recall score of our model (with min-max normalization) is:”, recall_score))</p>
+<h1 id="calculating-the-f1-measure-of-our-model-4">Calculating the ‘F1-measure’ of our model</h1>
+<p>f1_measure &lt;- 2 * precision_score * recall_score / ifelse(test = precision_score + recall_score == 0, yes = 1, no = precision_score + recall_score) # Printing the F1-measure of our model print(paste(“F1-measure of our model (with min-max normalization) is:”, f1_measure))</p>
+<h1 id="section-5">————————————————————————–</h1>
+<h1 id="implementing-naive-bayes-on-z-score-normalized-dataframe">Implementing Naive Bayes on z-score normalized dataframe</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment-6">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-pre-processed-z-score-normalized-dataframe-onto-r-script-1">Loading the pre-processed z-score normalized dataframe onto R script</h1>
+<p>filename &lt;- file.choose()</p>
+<h1 id="reading-the-dataset-with-y-column-as-factor-5">Reading the dataset with ‘y’ column as ‘factor’</h1>
+<p>zscore_normalized_data &lt;- read.csv(filename, colClasses = c(“y” = “factor”))</p>
+<h1 id="summarizing-the-dataframe-6">Summarizing the dataframe</h1>
+<p>summary(zscore_normalized_data)</p>
+<h1 id="checking-the-datatypes-of-variables-of-dataframe-5">Checking the datatypes of variables of dataframe</h1>
+<p>str(zscore_normalized_data)</p>
+<h1 id="viewing-the-dataframe-loaded-6">Viewing the dataframe loaded</h1>
+<p>View(zscore_normalized_data)</p>
+<h1 id="setting-the-seed-value-at-555-5">Setting the seed value at ‘555’</h1>
+<p>set.seed(555)</p>
+<h1 id="generating-a-list-of-70-random-indexes-of-the-dataframe-5">Generating a list of 70% random indexes of the dataframe</h1>
+<p>index &lt;- sort(sample(nrow(zscore_normalized_data), round(.70*nrow(zscore_normalized_data))))</p>
+<h1 id="creating-a-training-dataframe-with-70-data-from-dataframe-using-the-above-generated-indexes-list-5">Creating a training dataframe with 70% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>training &lt;- zscore_normalized_data[index,]</p>
+<h1 id="creating-a-test-dataframe-with-30-data-from-dataframe-using-the-above-generated-indexes-list-5">Creating a test dataframe with 30% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>test &lt;- zscore_normalized_data[-index,]</p>
+<h1 id="fitting-our-model-on-our-training-dataframe-2">Fitting our model on our training dataframe</h1>
+<p>fit &lt;- naiveBayes(factor(y)~., data = training, na.action=na.pass)</p>
+<h1 id="predicting-results-on-our-test-dataframe-3">Predicting results on our test dataframe</h1>
+<p>Prediction &lt;- predict(fit, test)</p>
+<h1 id="creating-a-confusion-matrix-of-our-results-and-storing-them-in-variable-named-result-5">Creating a confusion matrix of our results and storing them in variable named ‘result’</h1>
+<p>result &lt;- table(Actual=test[,21], Prediction)</p>
+<h1 id="printing-the-confusion-matrix-5">Printing the confusion matrix</h1>
+<p>print(“Confusion matrix of our result is:”) print(result)</p>
+<h1 id="calculating-the-incorrect-values-that-is-values-that-are-predicted-wrong-5">Calculating the incorrect values, that is, values that are predicted wrong</h1>
+<p>incorrect &lt;- (test[,21] != Prediction)</p>
+<h1 id="calculating-the-error-rate-of-our-model-5">Calculating the ‘error rate’ of our model</h1>
+<p>errror_rate &lt;- sum(incorrect)/length(incorrect) # Printing the error rate of our model print(paste(“Error rate of our model (with z-score normalization) is:”, errror_rate))</p>
+<h1 id="calculating-the-accuracy-of-our-model-5">Calculating the ‘accuracy’ of our model</h1>
+<p>accuracy &lt;- (1 - errror_rate) * 100 # Printing the accuracy of our model print(paste(“Accuracy of our model (with z-score normalization) is:”, accuracy))</p>
+<h1 id="calculating-the-precision-score-of-our-model-5">Calculating the ‘precision score’ of our model</h1>
+<p>precision_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[1,2]) == 0, yes = 1, no = sum(result[2,2], result[1,2])) # Printing the precision score of our model print(paste(“Precision score of our model (with z-score normalization) is:”, precision_score))</p>
+<h1 id="calculating-the-recall-score-of-our-model-5">Calculating the ‘recall score’ of our model</h1>
+<p>recall_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[2,1]) == 0, yes = 1, no = sum(result[2,2], result[2,1])) # Printing the recall score of our model print(paste(“Recall score of our model (with z-score normalization) is:”, recall_score))</p>
+<h1 id="calculating-the-f1-measure-of-our-model-5">Calculating the ‘F1-measure’ of our model</h1>
+<p>f1_measure &lt;- 2 * precision_score * recall_score / ifelse(test = precision_score + recall_score == 0, yes = 1, no = precision_score + recall_score) # Printing the F1-measure of our model print(paste(“F1-measure of our model (with z-score normalization) is:”, f1_measure))</p>
+<h1 id="section-6">———————————————————————————————-</h1>
+<h1 id="k-nearest-neighbors">K-Nearest Neighbors</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment-7">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-knn-library">Loading the KNN library</h1>
+<p>library(kknn)</p>
+<h1 id="implementing-knn-on-min-max-normalized-dataframe">Implementing KNN on min-max normalized dataframe</h1>
+<h1 id="loading-the-pre-processed-min-max-normalized-dataframe-onto-r-script-4">Loading the pre-processed min-max normalized dataframe onto R script</h1>
+<p>name &lt;- file.choose()</p>
+<h1 id="reading-the-dataset-with-y-column-as-factor-6">Reading the dataset with ‘y’ column as ‘factor’</h1>
+<p>minmax_normalized_data &lt;- read.csv(name, colClasses = c(“y” = “factor”))</p>
+<h1 id="view-the-dataframe-loaded">View the dataframe loaded</h1>
+<p>View(minmax_normalized_data)</p>
+<h1 id="generating-a-list-of-70-random-indexes-of-the-dataframe-6">Generating a list of 70% random indexes of the dataframe</h1>
+<p>indexes &lt;- sort(sample(nrow(minmax_normalized_data),as.integer(.70*nrow(minmax_normalized_data))))</p>
+<h1 id="creating-a-training-dataframe-with-70-data-from-dataframe-using-the-above-generated-indexes-list-6">Creating a training dataframe with 70% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>training &lt;- minmax_normalized_data[indexes,]</p>
+<h1 id="creating-a-test-dataframe-with-30-data-from-dataframe-using-the-above-generated-indexes-list-6">Creating a test dataframe with 30% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>test &lt;- minmax_normalized_data[-indexes,]</p>
+<h1 id="performing-knn-on-our-dataframe">Performing KNN on our dataframe</h1>
+<p>predict_k &lt;- kknn(formula = factor(y)~., training, test, k = 3, kernel =“rectangular”)</p>
+<h1 id="fitting-our-predicted-y-values-for-the-test-dataframe">Fitting our predicted ‘Y’ values for the ‘test’ dataframe</h1>
+<p>fit &lt;- fitted(predict_k)</p>
+<h1 id="creating-a-confusion-matrix-of-our-results-and-storing-them-in-variable-named-result-6">Creating a confusion matrix of our results and storing them in variable named ‘result’</h1>
+<p>result &lt;- table(test$y,fit)</p>
+<h1 id="printing-the-confusion-matrix-6">Printing the confusion matrix</h1>
+<p>print(“Confusion matrix of our result is:”) print(result)</p>
+<h1 id="calculating-the-incorrect-values-that-is-values-that-are-predicted-wrong-6">Calculating the incorrect values, that is, values that are predicted wrong</h1>
+<p>incorrect &lt;- (test[,21] != fit)</p>
+<h1 id="calculating-the-error-rate-of-our-model-6">Calculating the ‘error rate’ of our model</h1>
+<p>errror_rate &lt;- sum(incorrect)/length(incorrect) # Printing the error rate of our model print(paste(“Error rate of our model (with min-max normalization) is:”, errror_rate))</p>
+<h1 id="calculating-the-accuracy-of-our-model-6">Calculating the ‘accuracy’ of our model</h1>
+<p>accuracy &lt;- (1 - errror_rate) * 100 # Printing the accuracy of our model print(paste(“Accuracy of our model (with min-max normalization) is:”, accuracy))</p>
+<h1 id="calculating-the-precision-score-of-our-model-6">Calculating the ‘precision score’ of our model</h1>
+<p>precision_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[1,2]) == 0, yes = 1, no = sum(result[2,2], result[1,2])) # Printing the precision score of our model print(paste(“Precision score of our model (with min-max normalization) is:”, precision_score))</p>
+<h1 id="calculating-the-recall-score-of-our-model-6">Calculating the ‘recall score’ of our model</h1>
+<p>recall_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[2,1]) == 0, yes = 1, no = sum(result[2,2], result[2,1])) # Printing the recall score of our model print(paste(“Recall score of our model (with min-max normalization) is:”, recall_score))</p>
+<h1 id="calculating-the-f1-measure-of-our-model-6">Calculating the ‘F1-measure’ of our model</h1>
+<p>f1_measure &lt;- 2 * precision_score * recall_score / ifelse(test = precision_score + recall_score == 0, yes = 1, no = precision_score + recall_score) # Printing the F1-measure of our model print(paste(“F1-measure of our model (with min-max normalization) is:”, f1_measure))</p>
+<h1 id="section-7">————————————————————————–</h1>
+<h1 id="implementing-knn-on-z-score-normalized-dataframe">Implementing KNN on z-score normalized dataframe</h1>
+<h1 id="deleting-all-past-variables-from-our-r-environment-8">Deleting all past variables from our R environment</h1>
+<p>rm(list=ls())</p>
+<h1 id="loading-the-knn-library-1">Loading the KNN library</h1>
+<p>library(kknn)</p>
+<h1 id="implementing-knn-on-z-score-normalized-dataframe-1">Implementing KNN on z-score normalized dataframe</h1>
+<h1 id="loading-the-pre-processed-z-score-normalized-dataframe-onto-r-script-2">Loading the pre-processed z-score normalized dataframe onto R script</h1>
+<p>name &lt;- file.choose()</p>
+<h1 id="reading-the-dataset-with-y-column-as-factor-7">Reading the dataset with ‘y’ column as ‘factor’</h1>
+<p>zscore_normalized_data &lt;- read.csv(name, colClasses = c(“y” = “factor”))</p>
+<h1 id="view-the-dataframe-loaded-1">View the dataframe loaded</h1>
+<p>View(zscore_normalized_data)</p>
+<h1 id="generating-a-list-of-70-random-indexes-of-the-dataframe-7">Generating a list of 70% random indexes of the dataframe</h1>
+<p>indexes &lt;- sort(sample(nrow(zscore_normalized_data),as.integer(.70*nrow(zscore_normalized_data))))</p>
+<h1 id="creating-a-training-dataframe-with-70-data-from-dataframe-using-the-above-generated-indexes-list-7">Creating a training dataframe with 70% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>training &lt;- zscore_normalized_data[indexes,]</p>
+<h1 id="creating-a-test-dataframe-with-30-data-from-dataframe-using-the-above-generated-indexes-list-7">Creating a test dataframe with 30% data from dataframe using the above generated ‘indexes’ list</h1>
+<p>test &lt;- zscore_normalized_data[-indexes,]</p>
+<h1 id="performing-knn-on-our-dataframe-1">Performing KNN on our dataframe</h1>
+<p>predict_k &lt;- kknn(formula = factor(y)~., training, test, k = 3, kernel =“rectangular”)</p>
+<h1 id="fitting-our-predicted-y-values-for-the-test-dataframe-1">Fitting our predicted ‘Y’ values for the ‘test’ dataframe</h1>
+<p>fit &lt;- fitted(predict_k)</p>
+<h1 id="creating-a-confusion-matrix-of-our-results-and-storing-them-in-variable-named-result-7">Creating a confusion matrix of our results and storing them in variable named ‘result’</h1>
+<p>result &lt;- table(test$y,fit)</p>
+<h1 id="printing-the-confusion-matrix-7">Printing the confusion matrix</h1>
+<p>print(“Confusion matrix of our result is:”) print(result)</p>
+<h1 id="calculating-the-incorrect-values-that-is-values-that-are-predicted-wrong-7">Calculating the incorrect values, that is, values that are predicted wrong</h1>
+<p>incorrect &lt;- (test[,21] != fit)</p>
+<h1 id="calculating-the-error-rate-of-our-model-7">Calculating the ‘error rate’ of our model</h1>
+<p>errror_rate &lt;- sum(incorrect)/length(incorrect) # Printing the error rate of our model print(paste(“Error rate of our model (with z-score normalization) is:”, errror_rate))</p>
+<h1 id="calculating-the-accuracy-of-our-model-7">Calculating the ‘accuracy’ of our model</h1>
+<p>accuracy &lt;- (1 - errror_rate) * 100 # Printing the accuracy of our model print(paste(“Accuracy of our model (with z-score normalization) is:”, accuracy))</p>
+<h1 id="calculating-the-precision-score-of-our-model-7">Calculating the ‘precision score’ of our model</h1>
+<p>precision_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[1,2]) == 0, yes = 1, no = sum(result[2,2], result[1,2])) # Printing the precision score of our model print(paste(“Precision score of our model (with z-score normalization) is:”, precision_score))</p>
+<h1 id="calculating-the-recall-score-of-our-model-7">Calculating the ‘recall score’ of our model</h1>
+<p>recall_score &lt;- result[2,2] / ifelse(test = sum(result[2,2], result[2,1]) == 0, yes = 1, no = sum(result[2,2], result[2,1])) # Printing the recall score of our model print(paste(“Recall score of our model (with z-score normalization) is:”, recall_score))</p>
+<h1 id="calculating-the-f1-measure-of-our-model-7">Calculating the ‘F1-measure’ of our model</h1>
+<p>f1_measure &lt;- 2 * precision_score * recall_score / ifelse(test = precision_score + recall_score == 0, yes = 1, no = precision_score + recall_score) # Printing the F1-measure of our model print(paste(“F1-measure of our model (with z-score normalization) is:”, f1_measure))</p>
+</body>
+</html>
