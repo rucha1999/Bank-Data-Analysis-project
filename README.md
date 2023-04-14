@@ -23,7 +23,7 @@ After data pre-processing and normalization : Total no of rows - 38,245 Total no
 - K nearest Neighbor in Python
 
 ## Group Members
--Rucha Tirodkar
--Tanya Goel
--Saniya Farheen
--Prince Pipariya
+- Rucha Tirodkar
+- Tanya Goel
+- Saniya Farheen
+- Prince Pipariya
