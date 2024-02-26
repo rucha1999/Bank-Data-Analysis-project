@@ -4,7 +4,8 @@ Clients can subscribe to bank term deposits depending upon their needs, and peri
 
 # Dataset In use 
 
-The dataset that we have used is based on phone calls made by a Portuguese banking institution during a direct marketing campaign. Our dataset comprises 21 features in the form of columns (including our desired target column). ( https://data.world/data-society/bank-marketing-data/workspace/file?filename=bank-additional-names.txt )
+The dataset that we have used is based on phone calls made by a Portuguese banking institution during a direct marketing campaign. Our dataset comprises 21 features in the form of columns (including our desired target column).  
+https://data.world/data-society/bank-marketing-data/workspace/file?filename=bank-additional-names.txt 
 
 Before data pre-processing : Total no of rows - 41,190 Total no of columns - 21
 
